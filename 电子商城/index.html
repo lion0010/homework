@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div id="headerBox" class="headerBox">
+
+    </div>
+    <div id="navBox" class="navBox">
+        <ul></ul>
+        <div id="searchBox" class="searchBox">
+            <input type="text" id="search" class="search" placeholder="请输入关键字">
+            <button id="searchBtn" class="searchBtn">搜索</button>
+        </div>
+    </div>
+    <div id="content" class="content">
+        <ul></ul>
+    </div>
+</body>
+<script src="myajax.js"></script>
+<script>
+    var onavUl = document.querySelector('#navBox>ul');
+    var oconUl = document.querySelector('#content>ul');
+
+    myajax.get('http://h6.duchengjiu.top/shop/api_cat.php', {}, function(error, responseText) {
+
+        var json = JSON.parse(responseText);
+        var data = json.data;
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i];
+            onavUl.innerHTML += `<li><a href="#">${obj.cat_name}</a></li>`;
+        }
+    })
+    myajax.get('http://h6.duchengjiu.top/shop/api_goods.php', {}, function(error, responseText) {
+
+        var json = JSON.parse(responseText);
+        var data = json.data;
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i];
+            oconUl.innerHTML += `<li><img src="${obj.goods_thumb}"><a href="#">${obj.goods_name}</a><p href="#">${obj.goods_desc}</p><h2>￥：${obj.price}</h2></li>`;
+        }
+    })
+</script>
+
+</html>
+<!-- "goods_name": "星球大战白兵1:1头盔蓝牙音箱 专属定制编号|限量2000|精密模具注塑|强劲音质",
+"goods_desc": "暴风突击队的战士，帝国冲锋队的主力；为纪念永远的经典形象，香港Camino倾...",
+"goods_thumb": "http://imgs-qn.iliangcang.com/ware/goods/big/2/254/254729.jpg?t=1473850937",
+"goods_number": "0",
+"star_number": "0",
+"sort_order": "50",
+"price": "2580.00", -->

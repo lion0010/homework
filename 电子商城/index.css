@@ -1,0 +1,113 @@
+body {
+    background: #DBCD98;
+}
+
+.searchBox {
+    float: right;
+    width: 250px;
+}
+
+.searchBox input {
+    float: left;
+    width: 200px;
+    height: 28px;
+    border: 0;
+    outline: none;
+}
+
+.searchBtn {
+    height: 30px;
+    width: 50px;
+    outline: none;
+    border: 0;
+}
+
+.headerBox {
+    width: 1000px;
+    height: 120px;
+    background: #F18094;
+    margin: auto;
+}
+
+.navBox {
+    height: 30px;
+    width: 1000px;
+    opacity: .8;
+    margin: auto;
+}
+
+.navBox>ul>li {
+    height: 30px;
+    width: 75px;
+    float: left;
+}
+
+.navBox>ul>li>a:hover {
+    background: black;
+    opacity: .2;
+    color: whitesmoke;
+}
+
+.navBox>ul>li>a {
+    line-height: 30px;
+    color: black;
+    text-align: center;
+    display: inline-block;
+    width: 75px;
+    text-decoration: none;
+}
+
+.content {
+    width: 1000px;
+    height: 1500px;
+    margin: 10px auto;
+}
+
+.content>ul {
+    height: 100%;
+    width: 100%;
+    background: #82ABDC;
+}
+
+.content>ul>li {
+    height: 500px;
+    width: 250px;
+    float: left;
+    text-align: center;
+}
+
+.content>ul>li>a {
+    color: black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
+    width: 200px;
+    margin-top: 20px;
+    font-weight: 700;
+}
+
+.content>ul>li>p {
+    text-align: left;
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+    width: 200px;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.content>ul>li>img {
+    width: 250px;
+    height: 250px;
+}
+
+.content>ul>li>h2 {
+    margin-top: 30px;
+    float: right;
+}
+
+.content>ul>li :hover {
+    opacity: .8;
+}
