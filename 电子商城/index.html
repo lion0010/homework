@@ -12,7 +12,10 @@
 
 <body>
     <div id="headerBox" class="headerBox">
-
+        <p></p>
+        <input id="register" class="register" type="button" value="免费注册">
+        <input id="login" class="login" type="button" value="立即登录">
+        <a class="cart" href="cart.html">购物车</a>
     </div>
     <div id="navBox" class="navBox">
         <ul></ul>
@@ -26,17 +29,32 @@
     </div>
 </body>
 <script src="myajax.js"></script>
+<script src="getArg.js"></script>
 <script>
     var onavUl = document.querySelector('#navBox>ul');
     var oconUl = document.querySelector('#content>ul');
+    var search = document.querySelector('#search');
+    var searchBtn = document.querySelector('#searchBtn');
+    var register = document.querySelector('#register');
+    var login = document.querySelector('#login');
+    var welcome = document.querySelector('#headerBox>p')
+    search.onkeyup = searchFun;
 
+    function searchFun(event) {
+        if (event.keyCode === 13) {
+            location.href = 'search.html?search_text=' + search.value;
+        }
+    }
+    searchBtn.onclick = function() {
+        location.href = 'search.html?search_text=' + search.value;
+    }
     myajax.get('http://h6.duchengjiu.top/shop/api_cat.php', {}, function(error, responseText) {
 
         var json = JSON.parse(responseText);
         var data = json.data;
         for (var i = 0; i < data.length; i++) {
             var obj = data[i];
-            onavUl.innerHTML += `<li><a href="#">${obj.cat_name}</a></li>`;
+            onavUl.innerHTML += `<li><a href="商品列表.html?cat_id=${obj.cat_id}">${obj.cat_name}</a></li>`;
         }
     })
     myajax.get('http://h6.duchengjiu.top/shop/api_goods.php', {}, function(error, responseText) {
@@ -45,9 +63,25 @@
         var data = json.data;
         for (var i = 0; i < data.length; i++) {
             var obj = data[i];
-            oconUl.innerHTML += `<li><img src="${obj.goods_thumb}"><a href="#">${obj.goods_name}</a><p href="#">${obj.goods_desc}</p><h2>￥：${obj.price}</h2></li>`;
+            oconUl.innerHTML += `<li><img src="${obj.goods_thumb}"><a href="商品详情.html?goods_id=${obj.goods_id}">${obj.goods_name}</a><p href="#">${obj.goods_desc}</p><h2>￥：${obj.price}</h2></li>`;
         }
     })
+    register.onclick = function() {
+        location.href = "register.html";
+    }
+    login.onclick = function() {
+        location.href = "login.html";
+    }
+    if (getArgs('username') != '') {
+        login.value = "欢迎" + getArgs('username');
+        register.style.display = 'none';
+    }
+    // if (localStorage != undefined) {
+    //     login.style.display = 'none';
+    //     register.style.display = 'none';
+    //     welcome.innerHTML = `欢迎 ${localStorage.username}`;
+    //     console.log(localStorage.token);
+    // }
 </script>
 
 </html>

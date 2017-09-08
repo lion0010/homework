@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background-image: url(reg_bg.jpg);
+            height: 600px;
+        }
+        
+        .regbox {
+            background: -webkit-radial-gradient(#ccc, #888);
+            height: 300px;
+            width: 300px;
+            opacity: .9;
+            overflow: hidden;
+            border-radius: 10%;
+            margin: auto;
+        }
+        
+        input[type=text],
+        input[type=password] {
+            margin: 20px auto;
+            display: block;
+            outline: none;
+            border: 1px solid #aaa;
+            background: #fff;
+            height: 35px;
+            width: 200px;
+            border-radius: 10px;
+        }
+        
+        input[type=submit] {
+            display: block;
+            height: 30px;
+            width: 100px;
+            text-align: center;
+            background: #ccc;
+            outline: none;
+            box-shadow: 0;
+            border: 1px solid #fff;
+            margin: 30px auto;
+        }
+        
+        input[type=submit]:hover {
+            background: #888;
+            color: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="regbox">
+        <input type="text" name="username" placeholder="请输入用户名">
+        <input type="password" name="password" placeholder="请输入密码">
+        <input type="submit" value="register">
+    </div>
+    <script src="myajax.js"></script>
+    <script>
+        var oUsername = document.querySelector("input[name=username]");
+        var oPsd = document.querySelector("input[name=password]");
+        var oSubmit = document.querySelector("input[type=submit]");
+        oSubmit.onclick = function() {
+            myajax.post("http://h6.duchengjiu.top/shop/api_user.php", {
+                status: 'register',
+                username: oUsername.value,
+                password: oPsd.value
+            }, function(err, responseText) {
+                var json = JSON.parse(responseText);
+                if (json.message === '注册成功') {
+                    alert('注册成功,3秒后跳转登录页面');
+                    setTimeout(function() {
+                        location.href = 'login.html';
+                    }, 3000)
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

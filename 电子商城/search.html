@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div id="headerBox" class="headerBox">
+        <input id="register" class="register" type="button" value="免费注册">
+        <input id="login" class="login" type="button" value="立即登录">
+    </div>
+    <div id="navBox" class="navBox">
+        <ul></ul>
+        <div id="searchBox" class="searchBox">
+            <input type="text" id="search" class="search" placeholder="请输入关键字">
+            <button id="searchBtn" class="searchBtn">搜索</button>
+        </div>
+    </div>
+    <div id="content" class="content">
+        <ul></ul>
+    </div>
+</body>
+<script src="myajax.js"></script>
+<script src="getArg.js"></script>
+<script>
+    var onavUl = document.querySelector('#navBox>ul');
+    var oconUl = document.querySelector('#content>ul');
+    var search = document.querySelector('#search');
+    var searchBtn = document.querySelector('#searchBtn');
+
+    search.onkeyup = searchFun;
+
+    function searchFun(event) {
+        if (event.keyCode === 13) {
+            location.href = 'search.html?search_text=' + search.value;
+        }
+    }
+    searchBtn.onclick = function() {
+        location.href = 'search.html?search_text=' + search.value;
+    }
+    myajax.get('http://h6.duchengjiu.top/shop/api_cat.php', {}, function(error, responseText) {
+
+        var json = JSON.parse(responseText);
+        var data = json.data;
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i];
+            onavUl.innerHTML += `<li><a href="商品列表.html?cat_id=${obj.cat_id}">${obj.cat_name}</a></li>`;
+        }
+    })
+    var searchTxt = getArgs('search_text');
+    myajax.get('http://h6.duchengjiu.top/shop/api_goods.php', {
+        search_text: searchTxt
+    }, function(error, responseText) {
+        var json = JSON.parse(responseText);
+        var data = json.data;
+        for (var i = 0; i < data.length; i++) {
+            var obj = data[i];
+            oconUl.innerHTML += `<li><img src="${obj.goods_thumb}"><a href="商品详情.html?goods_id=${obj.goods_id}">${obj.goods_name}</a><p href="#">${obj.goods_desc}</p><h2>￥：${obj.price}</h2></li>`;
+        }
+    })
+</script>
+
+</html>
